@@ -1,0 +1,32 @@
+{
+	// Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+	// Pointez pour afficher la description des attributs existants.
+	// Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "Docker: Attach to Node",
+			"port": 9229,
+			"address": "localhost",
+			"localRoot": "${workspaceFolder}",
+			"remoteRoot": "/cafeducoin",
+			"protocol": "inspector"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Lancer le programme",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/dist/server.js",
+			"preLaunchTask": "tsc: watch - tsconfig.json",
+			"outFiles": [
+				"${workspaceFolder}/dist/**/*.js"
+			],
+			"runtimeExecutable": "/Users/ppeinado/.nvm/versions/node/v16.14.0/bin/node"
+		}
+	]
+}

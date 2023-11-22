@@ -1,0 +1,20 @@
+FROM node:18
+WORKDIR /cafeducoin-koa
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+EXPOSE 7654
+CMD [ "npm", "start"]
+
+
+
+FROM node:lts-alpine
+ENV NODE_ENV=development
+WORKDIR /cafeducoin
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+RUN npm install
+COPY . .
+EXPOSE 7654
+# RUN chown -R node /cafeducoin
+# USER node
+CMD ["npm", "start"]

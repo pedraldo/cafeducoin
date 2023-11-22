@@ -1,0 +1,35 @@
+# Choose the Image which has Node installed already
+FROM node:lts-alpine as development
+
+# - DEV MODE -
+# install simple http server for serving static content
+# RUN npm install -g http-server
+# ------------
+
+# make the 'app' folder the current working directory
+WORKDIR /cafeducoin-vue
+
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
+
+# install project dependencies
+RUN npm install
+
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
+
+# build app for production with minification
+RUN npm run build
+
+# - DEV MODE -
+# EXPOSE 8080
+# CMD [ "http-server", "dist" ]
+# ------------
+
+# - PROD MODE -
+FROM nginx:stable-alpine as production
+
+COPY --from=development /cafeducoin-vue/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+# -------------
